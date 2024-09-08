@@ -10,6 +10,7 @@ namespace libgit2pp
     class repository : public git_object
     {
         friend class revwalk;
+        friend class tree;
 
     private:
         git_repository *_repo;

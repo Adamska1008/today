@@ -8,12 +8,15 @@ namespace libgit2pp
 {
     class tree : public git_object
     {
+        friend class commit;
+
     private:
         git_tree *_tree;
 
+        tree() : _tree(nullptr) {}
         tree(git_tree *);
 
     public:
-        diff diff_tree(tree &);
+        diff diff_tree(tree &, repository &);
     };
 }

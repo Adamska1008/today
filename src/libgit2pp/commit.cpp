@@ -1,6 +1,7 @@
 #include <git2/commit.h>
 #include "commit.hpp"
 #include "error.hpp"
+#include "tree.hpp"
 
 namespace libgit2pp
 {
@@ -55,5 +56,15 @@ namespace libgit2pp
             throw git_error();
         }
         return parent_commit;
+    }
+
+    tree commit::commit_tree()
+    {
+        tree out;
+        if (git_commit_tree(&out._tree, _commit))
+        {
+            throw git_error();
+        }
+        return out;
     }
 }

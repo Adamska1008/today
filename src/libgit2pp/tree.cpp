@@ -7,4 +7,14 @@ namespace libgit2pp
         : _tree(t)
     {
     }
+
+    diff tree::diff_tree(tree &parent, repository &repo)
+    {
+        diff d;
+        if (git_diff_tree_to_tree(&d._diff, repo._repo, parent._tree, _tree, nullptr))
+        {
+            throw git_error();
+        }
+        return d;
+    }
 }

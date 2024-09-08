@@ -3,10 +3,12 @@
 #include "git_object.hpp"
 #include "oid.hpp"
 #include "signature.hpp"
-#include "tree.hpp"
 
 namespace libgit2pp
 {
+    // defined in tree.hpp
+    class tree;
+
     class commit : public git_object
     {
         friend class repository;
@@ -31,5 +33,7 @@ namespace libgit2pp
         std::size_t parentcount();
         // wraps git_commit_parent
         commit parent();
+        // wraps git_commit_tree
+        tree commit_tree();
     };
 }
