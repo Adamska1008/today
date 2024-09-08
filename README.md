@@ -4,6 +4,16 @@ Use **today** to review what you've done today! - In the future. Today is under 
 
 ![Static Badge](https://img.shields.io/badge/C%2B%2B-17-blue) ![GitHub License](https://img.shields.io/github/license/Adamska1008/today)
 
+## Usage
+
+### Counting everyday commit
+
+By default **today** shows your commit today. Without specified `--author` every commit is counted.
+
+```bash
+today
+```
+
 ## Setup
 
 ### Build from source

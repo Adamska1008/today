@@ -1,31 +1,36 @@
 #include <iostream>
+#include <vector>
 #include <fmt/core.h>
-#include "libgit2pp/repository.hpp"
-#include "libgit2pp/revwalk.hpp"
+#include <chrono>
+#include "repository.hpp"
+#include "revwalk.hpp"
 
 using namespace libgit2pp;
 
-int main(int argc, char **argv)
+struct commit_info
 {
-    // auto repo = repository::open(".");
-    // auto oid = repo.reference_name_to_id("HEAD");
-    // fmt::println(oid.to_str());
-    std::string_view path;
-    if (argc == 1)
-    {
-        path = ".";
-    }
-    else if (argc >= 2)
-    {
-        path = argv[1];
-    }
-    fmt::println("looking for repo in {}", path);
-    auto repo = repository::open(path);
-    revwalk walker(repo);
+    std::string author;
+    std::string message;
+    std::chrono::time_point<std::chrono::system_clock> time;
+    std::string branch;
+    int lines_added;
+    int lines_removed;
+    int files_changed;
+};
+
+std::vector<commit_info> collect_info(std::string_view directory)
+{
+    std::vector<commit_info> result;
+    auto repo = repository::open(directory);
+    auto walker = revwalk(repo);
+    walker.push_head();
     while (auto oid = walker.next())
     {
-        auto cmt = repo.lookup_commit(*oid);
-        auto msg = cmt.message();
-        fmt::println(msg);
+        auto commit = repo.lookup_commit(*oid);
     }
+}
+
+int main(int argc, char **argv)
+{
+    auto cs = collect_info(".");
 }
