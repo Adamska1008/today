@@ -8,6 +8,8 @@ namespace libgit2pp
 {
     // defined in tree.hpp
     class tree;
+    // defined in diff.hpp
+    class diff;
 
     class commit : public git_object
     {
@@ -22,18 +24,20 @@ namespace libgit2pp
         commit(git_commit *);
         ~commit();
         oid id() const;
-        std::string_view message();
+        std::string_view message() const;
         // wraps git_commit_committer
-        signature committer();
+        signature committer() const;
         // wraps git_commit_author
-        signature author();
+        signature author() const;
         // wraps git_commit_time
-        std::chrono::time_point<std::chrono::system_clock> time();
+        std::chrono::time_point<std::chrono::system_clock> time() const;
         // wraps git_commit_parentcount
-        std::size_t parentcount();
+        std::size_t parentcount(); 
         // wraps git_commit_parent
-        commit parent();
+        commit parent() const; 
         // wraps git_commit_tree
-        tree commit_tree();
+        tree commit_tree() const;
+
+        diff diff_from_parent(const repository &) const;
     };
 }

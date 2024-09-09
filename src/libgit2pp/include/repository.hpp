@@ -22,6 +22,9 @@ namespace libgit2pp
         static repository open(std::string_view path);
         // wraps git_reference_name_to_id
         oid reference_name_to_id(std::string_view name);
-        commit lookup_commit(oid &oid);
+        // wraps git_commit_lookup
+        commit lookup_commit(const oid &oid);
+        // get head commit
+        commit head_commit();
     };
 }

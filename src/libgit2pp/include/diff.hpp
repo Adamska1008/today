@@ -16,6 +16,10 @@ namespace libgit2pp
         void update_stats();
 
     public:
+        ~diff();
         diff(git_diff *_diff);
+        std::size_t stats_files_changed();
+        std::size_t stats_insertions();
+        std::size_t stats_deletions();
     };
 }

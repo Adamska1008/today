@@ -29,10 +29,10 @@ namespace libgit2pp
         {
             throw git_error();
         }
-        return oid(_oid);
+        return _oid;
     }
 
-    commit repository::lookup_commit(oid &oid)
+    commit repository::lookup_commit(const oid &oid)
     {
         commit commit;
         if (git_commit_lookup(&commit._commit, _repo, &oid._oid))
@@ -40,5 +40,15 @@ namespace libgit2pp
             throw git_error();
         }
         return commit;
+    }
+
+    commit repository::head_commit()
+    {
+        git_oid id;
+        if (git_reference_name_to_id(&id, _repo, "HEAD"))
+        {
+            throw git_error();
+        }
+        return lookup_commit(&id);
     }
 }
