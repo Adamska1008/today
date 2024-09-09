@@ -1,9 +1,12 @@
 [submodule "deps/fmt"]
 	path = deps/fmt
-	url = git@github.com:fmtlib/fmt.git q
+	url = https://github.com/fmtlib/fmt
 [submodule "deps/tabulate"]
 	path = deps/tabulate
 	url = https://github.com/p-ranav/tabulate
 [submodule "deps/date"]
 	path = deps/date
 	url = https://github.com/HowardHinnant/date
+[submodule "deps/spdlog"]
+	path = deps/spdlog
+	url = https://github.com/gabime/spdlog

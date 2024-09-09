@@ -30,9 +30,22 @@ Ensure that you meet:
 + CMake Version > 3.22
 + C++ Compiler with C++17 support
 
-Navigate to project source directory and run command:
+Run first:
+
+```bash
+git submodule init
+git submodule update
+```
+
+In project source directory run command:
 
 ```bash
 cmake -S . -B build
 cmake --build build
 ```
+
+Get binary in `build/src/today`.
+
+## Usage
+
+Run `today` in the git repository, you will see what you do today(git commits).

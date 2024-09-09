@@ -2,6 +2,7 @@
 #include "commit.hpp"
 #include "error.hpp"
 #include "tree.hpp"
+#include "repository.hpp"
 
 namespace libgit2pp
 {

@@ -10,5 +10,7 @@ if (PkgConfig_FOUND)
     PKG_CHECK_MODULES(LIBGIT2 libgit2>=0.99)
 endif()
 
+set(SPDLOG_FMT_EXTERNAL on)
+
 add_subdirectory(deps)
 add_subdirectory(src)

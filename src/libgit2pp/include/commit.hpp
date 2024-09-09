@@ -10,6 +10,8 @@ namespace libgit2pp
     class tree;
     // defined in diff.hpp
     class diff;
+    // defined in repository
+    class repository;
 
     class commit : public git_object
     {

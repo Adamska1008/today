@@ -54,6 +54,6 @@ namespace libgit2pp
         {
             update_stats();
         }
-        return git_diff_stats_insertions(_stats);
+        return git_diff_stats_deletions(_stats);
     }
 }
