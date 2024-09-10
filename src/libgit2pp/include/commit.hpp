@@ -24,21 +24,21 @@ namespace libgit2pp
 
     public:
         /* Constructor */
-        commit() : _commit(nullptr) {}
+        commit() noexcept : _commit(nullptr) {}
         commit(const commit &);
         /* Destructor */
         ~commit();
 
-        oid id() const;
-        std::string_view message() const;
+        oid id() const noexcept;
+        std::string_view message() const noexcept;
         // wraps git_commit_committer
-        signature committer() const;
+        signature committer() const noexcept;
         // wraps git_commit_author
-        signature author() const;
+        signature author() const noexcept;
         // wraps git_commit_time
-        std::chrono::time_point<std::chrono::system_clock> time() const;
+        std::chrono::time_point<std::chrono::system_clock> time() const noexcept;
         // wraps git_commit_parentcount
-        std::size_t parentcount();
+        std::size_t parentcount() const noexcept;
         // wraps git_commit_parent
         commit parent() const;
         // wraps git_commit_tree

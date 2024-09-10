@@ -12,6 +12,26 @@ namespace libgit2pp
         }
     }
 
+    repository::repository(repository &&other)
+        : _repo(other._repo)
+    {
+        other._repo = nullptr;
+    }
+
+    repository &repository::operator=(repository &&other)
+    {
+        if (this != &other)
+        {
+            if (_repo)
+            {
+                git_repository_free(_repo);
+            }
+            _repo = other._repo;
+            other._repo = nullptr;
+        }
+        return *this;
+    }
+
     repository repository::open(std::string_view path)
     {
         repository repo;

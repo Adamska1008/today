@@ -16,7 +16,15 @@ namespace libgit2pp
         git_repository *_repo;
 
     public:
+        /* Constructor */
         repository() : _repo(nullptr) {}
+        repository(const repository &) = delete;
+        repository(repository &&);
+
+        /* Assignement */
+        repository &operator=(const repository &) = delete;
+        repository &operator=(repository &&);
+
         ~repository();
         // wraps git_repository_open()
         static repository open(std::string_view path);

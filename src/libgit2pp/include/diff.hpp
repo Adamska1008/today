@@ -12,20 +12,21 @@ namespace libgit2pp
     private:
         git_diff *_diff;
         git_diff_stats *_stats;
-        diff() : _diff(nullptr) {}
+        diff() noexcept : _diff(nullptr) {}
         void update_stats();
-        diff(git_diff *_diff);
+        diff(git_diff *_diff) noexcept;
 
     public:
-        /* No public construtor */
+        /* Constructor */
+        diff(diff &&) noexcept;
         diff(const diff &) = delete;
-        ~diff();
-        /* Always using move semantics*/
-        diff(diff &&);
-        /* Delete copy assignment */
-        diff &operator=(const diff &) = delete;
 
-        diff &operator=(diff &&);
+        ~diff();
+
+        /* Assignment */
+        diff &operator=(const diff &) = delete;
+        diff &operator=(diff &&) noexcept;
+
         std::size_t stats_files_changed();
         std::size_t stats_insertions();
         std::size_t stats_deletions();

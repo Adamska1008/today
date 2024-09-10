@@ -24,23 +24,26 @@ namespace libgit2pp
         }
     }
 
-    diff::diff(git_diff *d)
+    diff::diff(git_diff *d) noexcept
         : _diff(d)
     {
         update_stats();
     }
 
-    diff::diff(diff &&other)
+    diff::diff(diff &&other) noexcept
         : _diff(other._diff)
     {
         other._diff = nullptr;
     }
 
-    diff &diff::operator=(diff &&other)
+    diff &diff::operator=(diff &&other) noexcept
     {
         if (this != &other)
         {
-            git_diff_free(_diff);
+            if (_diff)
+            {
+                git_diff_free(_diff);
+            }
             _diff = other._diff;
             other._diff = nullptr;
         }

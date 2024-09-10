@@ -14,8 +14,11 @@ namespace libgit2pp
         git_revwalk *_walker;
 
     public:
+        /* Constructor */
         // wraps git_revwalk_new
         revwalk(repository &repo);
+        revwalk(const revwalk &) = delete;
+        revwalk &operator=(const revwalk &) = delete;
         ~revwalk();
         // wraps git_revwalk_next
         std::optional<oid> next();

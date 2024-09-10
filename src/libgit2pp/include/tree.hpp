@@ -17,6 +17,10 @@ namespace libgit2pp
         tree(git_tree *);
 
     public:
+        tree(const tree &);
+
+        tree &operator=(const tree &);
+
         diff diff_tree(tree &, const repository &);
     };
 }

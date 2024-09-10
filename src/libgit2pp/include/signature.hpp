@@ -11,10 +11,14 @@ namespace libgit2pp
 
     private:
         git_signature *_signature;
-        signature(git_signature const *);
+        signature(const git_signature *);
 
     public:
+        /* Constructor */
         signature() noexcept : _signature(nullptr) {}
+        signature(const signature &);
+        signature &operator=(const signature &);
+        
         // wraps git_signature.name
         std::string_view name();
         // wraps git_signature.email

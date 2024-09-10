@@ -3,12 +3,29 @@
 
 namespace libgit2pp
 {
-    signature::signature(git_signature const *sig)
+    signature::signature(const git_signature *sig)
     {
         if (git_signature_dup(&_signature, sig))
         {
             throw git_error();
         }
+    }
+
+    signature::signature(const signature &other)
+        : signature(other._signature)
+    {
+    }
+
+    signature &signature::operator=(const signature &other)
+    {
+        if (this != &other)
+        {
+            if (git_signature_dup(&_signature, other._signature))
+            {
+                throw git_error();
+            }
+        }
+        return *this;
     }
 
     std::string_view signature::name()
