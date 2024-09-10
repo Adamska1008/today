@@ -19,6 +19,14 @@ namespace libgit2pp
     {
     }
 
+    commit::commit(const commit &other)
+    {
+        if (git_commit_dup(&_commit, other._commit))
+        {
+            throw git_error();
+        }
+    }
+
     oid commit::id() const
     {
         return git_commit_id(_commit);

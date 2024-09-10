@@ -20,11 +20,15 @@ namespace libgit2pp
 
     private:
         git_commit *_commit;
+        commit(git_commit *);
 
     public:
+        /* Constructor */
         commit() : _commit(nullptr) {}
-        commit(git_commit *);
+        commit(const commit &);
+        /* Destructor */
         ~commit();
+
         oid id() const;
         std::string_view message() const;
         // wraps git_commit_committer
@@ -34,9 +38,9 @@ namespace libgit2pp
         // wraps git_commit_time
         std::chrono::time_point<std::chrono::system_clock> time() const;
         // wraps git_commit_parentcount
-        std::size_t parentcount(); 
+        std::size_t parentcount();
         // wraps git_commit_parent
-        commit parent() const; 
+        commit parent() const;
         // wraps git_commit_tree
         tree commit_tree() const;
 

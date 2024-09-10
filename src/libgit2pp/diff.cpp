@@ -30,6 +30,23 @@ namespace libgit2pp
         update_stats();
     }
 
+    diff::diff(diff &&other)
+        : _diff(other._diff)
+    {
+        other._diff = nullptr;
+    }
+
+    diff &diff::operator=(diff &&other)
+    {
+        if (this != &other)
+        {
+            git_diff_free(_diff);
+            _diff = other._diff;
+            other._diff = nullptr;
+        }
+        return *this;
+    }
+
     std::size_t diff::stats_insertions()
     {
         if (!_stats)

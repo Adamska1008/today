@@ -9,14 +9,18 @@ namespace libgit2pp
     {
         friend class repository;
         friend class revwalk;
+        friend class commit;
 
     private:
         git_oid _oid;
+        oid(const git_oid *other);
+        oid(const git_oid &other);
 
     public:
+        /* Constructor */
         oid() = default;
-        oid(const git_oid *oid) { _oid = *oid; };
-        oid(const git_oid &oid) { _oid = oid; };
+        oid(const oid &);
+
         // wraps git_oid_tostr
         std::string to_str();
     };

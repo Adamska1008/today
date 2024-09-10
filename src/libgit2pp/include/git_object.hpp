@@ -6,6 +6,7 @@ namespace libgit2pp
     class git_object
     {
     public:
-        git_object() { git_libgit2_init(); };
+        git_object() { git_libgit2_init(); }
+        ~git_object() { git_libgit2_shutdown(); }
     };
 }
