@@ -45,7 +45,3 @@ cmake --build build
 ```
 
 Get binary in `build/src/today`.
-
-## Usage
-
-Run `today` in the git repository, you will see what you do today(git commits).

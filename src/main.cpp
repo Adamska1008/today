@@ -25,7 +25,6 @@ struct commit_info
         commit_info info;
         info.author = cmt.author().name();
         info.message = cmt.message();
-        spdlog::debug("Message on from {}", info.message);
         info.time = cmt.time();
         auto dif = cmt.diff_from_parent(repo);
         info.lines_added = dif.stats_insertions();
@@ -58,25 +57,16 @@ std::vector<commit_info> collect_info(std::string_view directory, date::sys_days
 {
     std::vector<commit_info> result;
     auto repo = repository::open(directory);
-    auto head_commit = repo.head_commit();
-    spdlog::debug("Commit HEAD message: {}", head_commit.message());
-    auto head_time = head_commit.time();
-    if (!is_day(head_time, d))
-    {
-        return {};
-    }
-    result.push_back(commit_info::from(head_commit, repo));
     auto walker = revwalk(repo);
     walker.push_head();
     while (auto oid = walker.next())
     {
+
         auto commit = repo.lookup_commit(*oid);
-        spdlog::debug("Commit message: {}", commit.message());
-        result.push_back(commit_info::from(commit, repo));
         auto time = commit.time();
-        if (!is_day(time, d))
+        if (is_day(time, d))
         {
-            break;
+            result.push_back(commit_info::from(commit, repo));
         }
     }
     return result;
@@ -88,7 +78,6 @@ void print_commits_info(const std::vector<commit_info> &infos)
     Table table;
     // Header
     table.add_row({"Author", "Message", "Time", "Lines Added", "Lines Removed", "Files Changed"});
-    spdlog::debug("Infos size: {}", infos.size());
     for (const auto &info : infos)
     {
         auto time_str = date::format("%T", info.time);
