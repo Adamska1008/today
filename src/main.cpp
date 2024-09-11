@@ -5,6 +5,7 @@
 #include <tabulate/table.hpp>
 #include "date/date.h"
 #include "spdlog/spdlog.h"
+#include "cxxopts.hpp"
 #include "repository.hpp"
 #include "revwalk.hpp"
 #include "diff.hpp"
@@ -90,9 +91,15 @@ void print_commits_info(const std::vector<commit_info> &infos)
     std::cout << table << std::endl;
 }
 
-int main()
+int main(int argc, char **argv)
 {
+#ifdef DEBUG
     spdlog::set_level(spdlog::level::debug);
-    auto cs = collect_info(".", today());
+#endif
+    cxxopts::Options options("today", "Use today to review what you've accomplished today!");
+    options.add_options()("dir", "The working directory to be check", cxxopts::value<std::string>()->default_value("."));
+    auto result = options.parse(argc, argv);
+    auto dir = result["dir"].as<std::string>();
+    auto cs = collect_info(dir, today());
     print_commits_info(cs);
 }
