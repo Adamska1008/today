@@ -11,6 +11,9 @@ if (PkgConfig_FOUND)
 endif()
 
 set(SPDLOG_FMT_EXTERNAL on)
+set(BUILD_TZ_LIB ON CACHE BOOL "build/install of TZ library")
+# tz databse
+set(USE_SYSTEM_TZ_DB ON CACHE BOOL "use system date-zone DB")
 
 add_subdirectory(deps)
 add_subdirectory(src)

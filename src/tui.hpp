@@ -2,6 +2,7 @@
 #include <chrono>
 #include "tabulate/table.hpp"
 #include "date/date.h"
+#include "date/tz.h"
 #include "commit.hpp"
 #include "repository.hpp"
 
@@ -42,7 +43,8 @@ void print_commits_info(const std::vector<t_commit_info> &infos)
     std::size_t tot_files = 0;
     for (const auto &info : infos)
     {
-        auto time_str = date::format("%F %R", info.time);
+        auto tz_time = date::make_zoned(date::current_zone(), info.time);
+        auto time_str = date::format("%F %R %Z", tz_time);
         table.add_row({info.author, info.message, time_str,
                        std::to_string(info.lines_added),
                        std::to_string(info.lines_removed),

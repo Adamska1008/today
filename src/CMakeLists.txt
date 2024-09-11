@@ -4,4 +4,5 @@ add_executable(today ${sources})
 
 add_subdirectory(libgit2pp)
 
-target_link_libraries(today fmt::fmt libgit2pp tabulate date::date spdlog::spdlog cxxopts::cxxopts)
+# pthread is required for date-tz
+target_link_libraries(today fmt::fmt libgit2pp tabulate date::date date::date-tz spdlog::spdlog cxxopts::cxxopts pthread)
