@@ -11,7 +11,12 @@ Use **today** to review what you've done today! - In the future. Today is under 
 By default **today** shows your commit today. Without specified `--author` every commit is counted.
 
 ```bash
-today
+Use today to review what you've accomplished today!
+Usage:
+  today [OPTION...]
+
+  -d, --directory arg  The working directory to be check (default: .)
+  -h, --help           Print usage
 ```
 
 ## Setup
