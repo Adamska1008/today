@@ -14,3 +14,8 @@ set(SPDLOG_FMT_EXTERNAL on)
 
 add_subdirectory(deps)
 add_subdirectory(src)
+
+# Install
+install(TARGETS today
+        RUNTIME DESTINATION bin
+        COMPONENT binary)

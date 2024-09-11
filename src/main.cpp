@@ -66,7 +66,7 @@ int main(int argc, char **argv)
         fmt::println("{}", options.help());
         return 0;
     }
-    auto dir = result["dir"].as<std::string>();
+    auto dir = result["directory"].as<std::string>();
     auto cs = collect_info(dir, today());
     print_commits_info(cs);
 }

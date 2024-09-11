@@ -23,7 +23,7 @@ Usage:
 
 ### Build from source
 
-**today** depends on `libgit2`, so make sure you've already installed ligbit2 >= 1.0. On ubuntu, run command:
+**today** depends on `libgit2`, so make sure you've already installed ligbit2 >= 1.0. On ubuntu, run:
 
 ```bash
 sudo apt-get update
@@ -49,4 +49,10 @@ cmake -S . -B build
 cmake --build build
 ```
 
-Get binary in `build/src/today`.
+Then you get binary in `build/src/today`.
+
+### Install
+
+```bash
+cmake --install build --component binary # generally requires sudo 
+````
