@@ -58,6 +58,7 @@ int main(int argc, char **argv)
 #endif
     cxxopts::Options options("today", "Use today to review what you've accomplished today!");
     options.add_options()
+        ("o,offset", "Offset from today", cxxopts::value<int>()->default_value("0"))
         ("d,directory", "The working directory to be check", cxxopts::value<std::string>()->default_value("."))
         ("h,help", "Print usage");
     auto result = options.parse(argc, argv);
@@ -66,7 +67,9 @@ int main(int argc, char **argv)
         fmt::println("{}", options.help());
         return 0;
     }
+    auto offset = result["offset"].as<int>();
     auto dir = result["directory"].as<std::string>();
-    auto cs = collect_info(dir, today());
+    spdlog::debug("{}", offset);
+    auto cs = collect_info(dir, today() - date::days(offset));
     print_commits_info(cs);
 }
