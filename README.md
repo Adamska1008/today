@@ -1,8 +1,8 @@
 # today
 
-Use **today** to review what you've done today! - In the future. Today is under construction now.
-
 ![Static Badge](https://img.shields.io/badge/C%2B%2B-17-blue) ![GitHub License](https://img.shields.io/github/license/Adamska1008/today)
+
+Today is a lightweight tool for tracking daily code commits, allowing developers to easily review the number of commits, lines changed and files modified each day.
 
 ## Usage
 
@@ -11,10 +11,11 @@ Use **today** to review what you've done today! - In the future. Today is under 
 By default **today** shows your commit today. Without specified `--author` every commit is counted.
 
 ```bash
-Use today to review what you have accomplished today!
+Use today to review what you've accomplished today!
 Usage:
   today [OPTION...]
 
+  -o, --offset arg     Offset from today (default: 0)
   -d, --directory arg  The working directory to be check (default: .)
   -h, --help           Print usage
 ```
@@ -40,6 +41,12 @@ Total: Commits 5, Lines Added 118, Lines Removed 9, Files Changed 6.
 +=========+======================================+======================+=============+===============+===============+
 | adamska | deps: add cxxopts                    | 2024-09-11 11:42 CST | 16          | 9             | 6             |
 +=========+======================================+======================+=============+===============+===============+
+```
+
+Use `offset` options to check your commit yesterday or before yesterday.
+
+```sh
+today --offset=-1 # generally only negative number works, you can't predict the future
 ```
 
 ## Setup
