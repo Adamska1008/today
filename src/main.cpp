@@ -40,7 +40,6 @@ std::vector<t_commit_info> collect_info(std::string_view directory, date::sys_da
     walker.push_head();
     while (auto oid = walker.next())
     {
-
         auto commit = repo.lookup_commit(*oid);
         auto time = commit.time();
         if (is_day(time, d))
@@ -48,6 +47,7 @@ std::vector<t_commit_info> collect_info(std::string_view directory, date::sys_da
             result.push_back(t_commit_info::from(commit, repo));
         }
     }
+    spdlog::debug("commit size: {}", result.size());
     return result;
 }
 
@@ -70,6 +70,6 @@ int main(int argc, char **argv)
     auto offset = result["offset"].as<int>();
     auto dir = result["directory"].as<std::string>();
     spdlog::debug("{}", offset);
-    auto cs = collect_info(dir, today() - date::days(offset));
+    auto cs = collect_info(dir, today() + date::days(offset));
     print_commits_info(cs);
 }
