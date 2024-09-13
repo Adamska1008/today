@@ -17,7 +17,7 @@ Usage:
 
   -o, --offset arg     Offset from today (default: 0)
   -d, --directory arg  The working directory to be check (default: .)
-  -a, --author arg     Who's commits that will be checked
+  -a, --author arg     Whose commits that will be checked
   -h, --help           Print usage
 ```
 
