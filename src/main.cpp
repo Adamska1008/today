@@ -33,12 +33,20 @@ date::sys_days today()
     return date::floor<date::days>(now);
 }
 
-std::vector<t_commit_info> collect_info(std::string_view directory, date::sys_days d)
+std::vector<t_commit_info> collect_info(std::string_view directory, date::sys_days d, std::optional<std::string> opt_author)
 {
     std::vector<t_commit_info> result;
     auto repo = repository::open(directory);
     auto cfg_snapshot = repo.repo_config_snapshot();
-    auto author = cfg_snapshot.get_string("user.name");
+    std::string author;
+    if (opt_author)
+    {
+        author = *opt_author;
+    }
+    else
+    {
+        author = cfg_snapshot.get_string("user.name");
+    }
     spdlog::debug("setting author: {}", author);
     auto walker = revwalk(repo);
     walker.push_head();
@@ -63,8 +71,9 @@ int main(int argc, char **argv)
 #ifdef DEBUG
     spdlog::set_level(spdlog::level::debug);
 #endif
-    cxxopts::Options options("today", "Use today to review what you've accomplished today!");
-    options.add_options()("o,offset", "Offset from today", cxxopts::value<int>()->default_value("0"))("d,directory", "The working directory to be check", cxxopts::value<std::string>()->default_value("."))("h,help", "Print usage");
+    cxxopts::Options options("today", "Use today to review what you accomplished today!");
+    options.add_options()("o,offset", "Offset from today", cxxopts::value<int>()->default_value("0"))("d,directory", "The working directory to be check", cxxopts::value<std::string>()->default_value("."))("a,author", "Who's commits that will be checked", cxxopts::value<std::string>())("h,help", "Print usage");
+
     auto result = options.parse(argc, argv);
     if (result.count("help"))
     {
@@ -73,8 +82,13 @@ int main(int argc, char **argv)
     }
     auto offset = result["offset"].as<int>();
     auto dir = result["directory"].as<std::string>();
+    std::optional<std::string> opt_author;
+    if (result.count("author"))
+    {
+        opt_author = result["author"].as<std::string>();
+    }
     spdlog::debug("offset: {}", offset);
 
-    auto cs = collect_info(dir, today() + date::days(offset));
+    auto cs = collect_info(dir, today() + date::days(offset), opt_author);
     print_commits_info(cs);
 }

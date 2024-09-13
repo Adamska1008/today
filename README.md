@@ -10,13 +10,14 @@ Today is a lightweight tool for tracking daily code commits, allowing developers
 
 By default **today** shows your commits today. It reads your git commit info and list the commits which is committed by the `${user.name}` in *global config* .
 
-```bash
+```sh
 Use today to review what you accomplished today!
 Usage:
   today [OPTION...]
 
   -o, --offset arg     Offset from today (default: 0)
   -d, --directory arg  The working directory to be check (default: .)
+  -a, --author arg     Who's commits that will be checked
   -h, --help           Print usage
 ```
 
