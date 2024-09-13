@@ -4,6 +4,7 @@
 #include "git_object.hpp"
 #include "oid.hpp"
 #include "commit.hpp"
+#include "config.hpp"
 
 namespace libgit2pp
 {
@@ -34,5 +35,9 @@ namespace libgit2pp
         commit lookup_commit(const oid &oid);
         // get head commit
         commit head_commit();
+        // wraps git_repository_config
+        config repo_config();
+        // wraps git_repository_config_snapshot
+        config_snapshot repo_config_snapshot();
     };
 }

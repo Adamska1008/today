@@ -71,4 +71,24 @@ namespace libgit2pp
         }
         return lookup_commit(&id);
     }
+
+    config repository::repo_config()
+    {
+        config cfg;
+        if (git_repository_config(&cfg._config, _repo))
+        {
+            throw git_error();
+        }
+        return cfg;
+    }
+
+    config_snapshot repository::repo_config_snapshot()
+    {
+        config_snapshot snapshot;
+        if (git_repository_config_snapshot(&snapshot._snapshot, _repo))
+        {
+            throw git_error();
+        }
+        return snapshot;
+    }
 }

@@ -8,10 +8,10 @@ Today is a lightweight tool for tracking daily code commits, allowing developers
 
 ### Counting everyday commit
 
-By default **today** shows your commit today. Without specified `--author` every commit is counted.
+By default **today** shows your commits today. It reads your git commit info and list the commits which is committed by the `${user.name}` in *global config* .
 
 ```bash
-Use today to review what you've accomplished today!
+Use today to review what you accomplished today!
 Usage:
   today [OPTION...]
 
@@ -26,7 +26,7 @@ today
 ```
 
 ```sh
-# output is like
+# output looks like
 Total: Commits 5, Lines Added 118, Lines Removed 9, Files Changed 6.
 +=========+======================================+======================+=============+===============+===============+
 | Author  | Message                              | Time                 | Lines Added | Lines Removed | Files Changed |
@@ -76,13 +76,13 @@ In project source directory run command:
 
 ```bash
 cmake -S . -B build
-cmake --build build
+cmake --build build --config Release
 ```
 
-Then you get binary in `build/src/today`.
+Then you get binary `today` in `build/src/`.
 
 ### Install
 
 ```bash
-cmake --install build --component binary # generally requires sudo 
+cmake --install build --component binary # usually requires sudo 
 ````

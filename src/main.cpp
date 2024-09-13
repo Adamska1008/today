@@ -10,6 +10,7 @@
 #include "revwalk.hpp"
 #include "diff.hpp"
 #include "tui.hpp"
+#include "config.hpp"
 
 using namespace libgit2pp;
 
@@ -20,7 +21,7 @@ bool is_today(std::chrono::system_clock::time_point tp)
     return today == tp_day;
 }
 
-bool is_day(std::chrono::system_clock::time_point tp, date::sys_days d)
+bool at_day(std::chrono::system_clock::time_point tp, date::sys_days d)
 {
     auto tp_day = date::floor<date::days>(tp);
     return tp_day == d;
@@ -36,13 +37,19 @@ std::vector<t_commit_info> collect_info(std::string_view directory, date::sys_da
 {
     std::vector<t_commit_info> result;
     auto repo = repository::open(directory);
+    auto cfg_snapshot = repo.repo_config_snapshot();
+    auto author = cfg_snapshot.get_string("user.name");
+    spdlog::debug("setting author: {}", author);
     auto walker = revwalk(repo);
     walker.push_head();
     while (auto oid = walker.next())
     {
         auto commit = repo.lookup_commit(*oid);
-        auto time = commit.time();
-        if (is_day(time, d))
+        if (commit.author().name() != author)
+        {
+            continue;
+        }
+        if (auto time = commit.time(); at_day(time, d))
         {
             result.push_back(t_commit_info::from(commit, repo));
         }
@@ -57,10 +64,7 @@ int main(int argc, char **argv)
     spdlog::set_level(spdlog::level::debug);
 #endif
     cxxopts::Options options("today", "Use today to review what you've accomplished today!");
-    options.add_options()
-        ("o,offset", "Offset from today", cxxopts::value<int>()->default_value("0"))
-        ("d,directory", "The working directory to be check", cxxopts::value<std::string>()->default_value("."))
-        ("h,help", "Print usage");
+    options.add_options()("o,offset", "Offset from today", cxxopts::value<int>()->default_value("0"))("d,directory", "The working directory to be check", cxxopts::value<std::string>()->default_value("."))("h,help", "Print usage");
     auto result = options.parse(argc, argv);
     if (result.count("help"))
     {
@@ -69,7 +73,8 @@ int main(int argc, char **argv)
     }
     auto offset = result["offset"].as<int>();
     auto dir = result["directory"].as<std::string>();
-    spdlog::debug("{}", offset);
+    spdlog::debug("offset: {}", offset);
+
     auto cs = collect_info(dir, today() + date::days(offset));
     print_commits_info(cs);
 }
