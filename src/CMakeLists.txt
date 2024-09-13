@@ -9,4 +9,5 @@ target_link_libraries(today fmt::fmt libgit2pp tabulate date::date date::date-tz
 
 target_compile_definitions(today PRIVATE
     $<$<CONFIG:Debug>:DEBUG>
+    PROJECT_VERSION="${CMAKE_PROJECT_VERSION}"
 )

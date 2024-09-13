@@ -72,13 +72,22 @@ int main(int argc, char **argv)
     spdlog::set_level(spdlog::level::debug);
 #endif
     cxxopts::Options options("today", "Use today to review what you accomplished today!");
-    options.add_options()("o,offset", "Offset from today", cxxopts::value<int>()->default_value("0"))("d,directory", "The working directory to be check", cxxopts::value<std::string>()->default_value("."))("a,author", "Who's commits that will be checked", cxxopts::value<std::string>())("h,help", "Print usage");
+    options.add_options()("o,offset", "Offset from today", cxxopts::value<int>()->default_value("0"))("d,directory", "The working directory to be check", cxxopts::value<std::string>()->default_value("."))("a,author", "Who's commits that will be checked", cxxopts::value<std::string>())("h,help", "Print usage")("v,version", "Print version");
 
     auto result = options.parse(argc, argv);
     if (result.count("help"))
     {
         fmt::println("{}", options.help());
         return 0;
+    }
+    if (result.count("version"))
+    {
+#ifdef PROJECT_VERSION 
+        fmt::println("{}", PROJECT_VERSION);
+        return 0;
+#else
+        fmt::println("exit for undefined version");
+#endif
     }
     auto offset = result["offset"].as<int>();
     auto dir = result["directory"].as<std::string>();
