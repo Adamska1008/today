@@ -23,7 +23,10 @@ jobs:
         sudo apt-get install libgit2-dev
     
     - name: Build
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      run: |
+        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
 
     - name: Package
       run: |
